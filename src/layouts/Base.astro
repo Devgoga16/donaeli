@@ -1,0 +1,46 @@
+---
+import "../styles/global.css";
+import Icons from "../components/Icons.astro";
+import ogImage from "../assets/ig/sabores.jpg";
+import { getImage } from "astro:assets";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Doña Eli Empanadas · Las mejores empanadas de Lima Norte",
+  description = "Empanadas peruanas hechas a mano y horneadas: pollo, carne, salchicha huachana, mixta y queso. Arma tu pedido y envíalo por WhatsApp.",
+} = Astro.props;
+
+const og = await getImage({ src: ogImage, width: 640, format: "jpg" });
+const ogUrl = Astro.site ? new URL(og.src, Astro.site).href : og.src;
+---
+
+<!doctype html>
+<html lang="es-PE">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#3A1E0F" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_PE" />
+    <meta property="og:title" content="Doña Eli Empanadas" />
+    <meta property="og:description" content="Las mejores empanadas de Lima Norte. Hechas a mano, al horno y con harto sabor a Perú." />
+    <meta property="og:image" content={ogUrl} />
+    <link rel="icon" href="/img/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=Kaushan+Script&family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+    <Icons />
+  </body>
+</html>

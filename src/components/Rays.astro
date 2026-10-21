@@ -1,0 +1,22 @@
+---
+// Rayos del logo, dibujados al compilar.
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = "rays", style } = Astro.props;
+const cx = 300, cy = 300, n = 23;
+const lines: number[][] = [];
+for (let i = 0; i < n; i++) {
+  const a = Math.PI + (Math.PI * (i + 0.5)) / n;
+  const long = i % 2 === 0;
+  const r1 = long ? 150 : 175, r2 = long ? 290 : 250;
+  const cut = r1 + (r2 - r1) * (long ? 0.62 : 0.55);
+  const pt = (r: number) => [cx + Math.cos(a) * r, cy + Math.sin(a) * r].map((v) => +v.toFixed(1));
+  lines.push([...pt(r1), ...pt(cut - 6)], [...pt(cut + 6), ...pt(r2)]);
+}
+---
+
+<svg class={className} style={style} viewBox="0 0 600 300" aria-hidden="true">
+  <g>{lines.map(([x1, y1, x2, y2]) => <line x1={x1} y1={y1} x2={x2} y2={y2} />)}</g>
+</svg>

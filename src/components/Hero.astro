@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+import Rays from "./Rays.astro";
+import { waSaludo } from "../data/negocio";
+import sabores from "../assets/ig/sabores.jpg";
+import huachana from "../assets/ig/huachana.jpg";
+
+const atributos = ["Hechas a mano", "Masa artesanal", "Doraditas al horno", "Sabor casero", "Con su limoncito", "Lima Norte"];
+---
+
+<section class="hero" id="inicio">
+  <Rays />
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="sticker">🏆 Las mejores de Lima Norte</p>
+      <h1>Empanadas peruanas <em>hechas a mano</em> y con harto sabor a Perú</h1>
+      <p class="hero__lead">
+        Masa artesanal, doradito al horno y rellenos de pollo, carne, salchicha huachana, mixta y queso. Arma tu pedido
+        aquí y te lo confirmamos por WhatsApp.
+      </p>
+      <div class="hero__cta">
+        <a href="#carta" class="btn btn--primary">Ver la carta</a>
+        <a href={waSaludo} class="btn btn--wa" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"></use></svg> Pedir por WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="hero__media">
+      <figure class="hero__photo hero__photo--main">
+        <Image src={sabores} alt="Bandeja de empanadas doraditas con jugo y chicha morada" widths={[480, 640]} sizes="(max-width: 960px) 90vw, 540px" loading="eager" fetchpriority="high" />
+      </figure>
+      <figure class="hero__photo hero__photo--small">
+        <Image src={huachana} alt="Empanada abierta rellena de salchicha huachana" width={320} />
+      </figure>
+      <span class="hero__badge"><b>Al horno</b> y hechas<br />con amor</span>
+    </div>
+  </div>
+</section>
+
+<div class="ribbon" aria-label="Lo que nos hace especiales">
+  <div class="ribbon__track">
+    {atributos.map((a) => <span>{a}</span>)}
+    {atributos.map((a) => <span aria-hidden="true">{a}</span>)}
+  </div>
+</div>

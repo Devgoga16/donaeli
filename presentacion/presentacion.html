@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8">
+<title>Propuesta web · Doña Eli Empanadas</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=Kaushan+Script&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  :root {
+    --dorado: #F4B23E; --dorado-claro: #FFD27A; --naranja: #E07B1F; --naranja-osc: #C2620E;
+    --tostado: #2E170B; --cafe: #4A2612; --cafe-2: #6B3A1C; --crema: #FFF6E4; --crema-2: #FCE9C4;
+    --chicha: #5B1F4A; --wa: #1FAF55; --suave: #6E4E3A;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #777; }
+  body { font-family: "Outfit", sans-serif; color: var(--tostado); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide {
+    width: 1280px; height: 720px; position: relative; overflow: hidden;
+    background: var(--crema); padding: 64px 72px; page-break-after: always; break-after: page;
+    margin: 0 auto 24px;
+  }
+  @media print { .slide { margin: 0; } html, body { background: none; } }
+  .dark { background: var(--tostado); color: var(--crema); }
+  .gold { background: var(--crema-2); }
+  h1, h2, h3 { font-family: "Fraunces", serif; margin: 0; line-height: 1.04; letter-spacing: -.01em; }
+  h2 { font-size: 52px; font-weight: 900; margin-bottom: 18px; }
+  h3 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+  em { font-style: normal; color: var(--naranja); }
+  .dark em { color: var(--dorado); }
+  p { margin: 0 0 12px; font-size: 19px; line-height: 1.5; }
+  .lead { font-size: 22px; color: var(--suave); max-width: 900px; }
+  .dark .lead { color: rgba(255,246,228,.78); }
+  .tag { display: inline-block; font-family: "Kaushan Script", cursive; font-size: 20px; background: var(--dorado); color: var(--tostado); padding: 2px 14px 5px; border-radius: 10px; transform: rotate(-3deg); margin-bottom: 18px; }
+  .num { position: absolute; right: 40px; bottom: 28px; font-size: 14px; font-weight: 600; opacity: .5; }
+  .foot-brand { position: absolute; left: 72px; bottom: 26px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; opacity: .7; }
+  .foot-brand img { width: 26px; height: 26px; border-radius: 50%; background: #fff; }
+
+  /* Marcos */
+  .browser { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 30px 60px -25px rgba(0,0,0,.55); border: 1px solid rgba(0,0,0,.08); }
+  .browser__bar { height: 30px; background: #EEE7DA; display: flex; align-items: center; gap: 7px; padding: 0 12px; }
+  .browser__bar i { width: 10px; height: 10px; border-radius: 50%; background: #d9cdb8; display: block; }
+  .browser__bar i:nth-child(1) { background: #ef6a5e; } .browser__bar i:nth-child(2) { background: #f5bf4f; } .browser__bar i:nth-child(3) { background: #61c454; }
+  .browser__bar span { margin-left: 14px; background: #fff; border-radius: 6px; font-size: 11px; padding: 3px 12px; color: #8a7a66; }
+  .browser img { display: block; width: 100%; }
+  .phone { width: 250px; border-radius: 36px; background: #140904; padding: 9px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); position: relative; }
+  .phone img { display: block; width: 100%; border-radius: 28px; }
+  .phone::before { content: ""; position: absolute; top: 16px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; border-radius: 10px; background: #140904; z-index: 2; }
+
+  .rays { position: absolute; pointer-events: none; }
+  .rays line { stroke: var(--dorado); stroke-width: 3; stroke-linecap: round; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; height: 100%; }
+  .bullets { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 14px; }
+  .bullets li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; font-size: 19px; line-height: 1.4; align-items: start; }
+  .bullets li b { font-weight: 700; }
+  .bullets li::before { content: "✓"; width: 34px; height: 34px; border-radius: 50%; background: var(--dorado); color: var(--tostado); display: grid; place-items: center; font-weight: 800; font-size: 17px; }
+  .bullets.x li::before { content: "!"; background: rgba(224,123,31,.18); color: var(--naranja-osc); }
+  .dark .bullets li { color: rgba(255,246,228,.9); }
+
+  .cards { display: grid; gap: 22px; }
+  .card { background: #fff; border-radius: 26px; padding: 28px; box-shadow: 0 18px 40px -22px rgba(46,23,11,.45); }
+  .dark .card { background: var(--cafe); box-shadow: none; }
+  .card p { font-size: 17px; color: var(--suave); margin: 0; }
+  .dark .card p { color: rgba(255,246,228,.75); }
+  .icon { width: 58px; height: 58px; border-radius: 50%; background: var(--dorado); display: grid; place-items: center; font-size: 28px; margin-bottom: 16px; box-shadow: 0 5px 0 var(--naranja-osc); }
+  .stat { font-family: "Fraunces", serif; font-weight: 900; font-size: 44px; color: var(--naranja); line-height: 1; }
+  .pill { display: inline-block; padding: 5px 14px; border-radius: 999px; font-weight: 600; font-size: 14px; background: var(--tostado); color: var(--dorado); }
+  .pill.ok { background: var(--wa); color: #fff; }
+  .callout { position: absolute; background: var(--tostado); color: var(--crema); font-size: 15px; font-weight: 600; padding: 9px 14px; border-radius: 12px; box-shadow: 0 12px 25px -10px rgba(0,0,0,.5); max-width: 240px; line-height: 1.3; }
+  .callout b { color: var(--dorado); display: block; font-family: "Fraunces", serif; font-size: 17px; }
+  .callout .dot { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--dorado); color: var(--tostado); font-weight: 800; display: grid; place-items: center; top: -12px; left: -12px; font-size: 14px; }
+  .compact .card { padding: 20px 24px; }
+  .compact .icon { width: 46px; height: 46px; font-size: 22px; margin-bottom: 10px; }
+  .compact .card p { font-size: 15.5px; }
+  .compact h3 { font-size: 21px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Portada -->
+<section class="slide dark" style="padding:0">
+  <svg class="rays" id="rays1" viewBox="0 0 600 300" style="left:-60px;top:40px;width:720px;opacity:.45"><g></g></svg>
+  <div style="position:absolute;left:72px;top:70px;width:560px">
+    <img src="../public/img/logo-512.png" alt="" style="width:120px;height:120px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px var(--dorado);margin-bottom:34px">
+    <p class="tag">Propuesta de renovación digital</p>
+    <h1 style="font-size:66px;font-weight:900;margin-bottom:22px">Una web que convierte <em>antojos</em> en pedidos</h1>
+    <p class="lead" style="font-size:21px">Nueva página web para <b style="color:var(--crema)">Doña Eli Empanadas</b>: carta digital, combos y pedidos directos por WhatsApp, lista para el celular.</p>
+  </div>
+  <div class="browser" style="position:absolute;right:-90px;top:96px;width:690px;transform:rotate(-2deg)">
+    <div class="browser__bar"><i></i><i></i><i></i><span>Doña Eli Empanadas</span></div>
+    <img src="capturas/d-hero.jpg" alt="">
+  </div>
+  <div class="phone" style="position:absolute;right:450px;top:330px;width:200px;transform:rotate(3deg)"><img src="capturas/m-hero.jpg" alt=""></div>
+</section>
+
+<!-- 2. Punto de partida -->
+<section class="slide">
+  <div class="grid2" style="grid-template-columns:1.1fr .9fr">
+    <div>
+      <p class="tag">El punto de partida</p>
+      <h2>Hoy Doña Eli vive <em>solo en Instagram</em></h2>
+      <p class="lead">Tiene lo más difícil: un producto que antoja, buenas fotos y una identidad bonita. Pero el cliente que quiere pedir no encuentra lo básico en un solo lugar.</p>
+      <ul class="bullets x">
+        <li><span>No hay una <b>carta con todas las variedades</b> a la vista.</span></li>
+        <li><span>No hay <b>botón directo para pedir</b> ni número visible en el perfil.</span></li>
+        <li><span><b>Dirección, horario y delivery</b> no aparecen en ningún lado.</span></li>
+        <li><span>Cada cliente tiene que escribir y preguntar todo desde cero.</span></li>
+      </ul>
+    </div>
+    <div style="position:relative;height:100%">
+      <div class="card" style="position:absolute;top:40px;left:20px;right:0;text-align:center;padding:34px">
+        <img src="../public/img/logo-512.png" alt="" style="width:110px;height:110px;border-radius:50%;margin:0 auto 14px;box-shadow:0 0 0 4px var(--dorado)">
+        <h3 style="font-size:26px">@donaeli_empanadas</h3>
+        <p style="margin-bottom:18px">Empanadería peruana · Lima Norte</p>
+        <div style="display:flex;justify-content:center;gap:40px">
+          <div><div class="stat">418</div><p>seguidores</p></div>
+          
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:20px">
+          <img src="../src/assets/ig/bandeja.jpg" style="width:100%;border-radius:8px"><img src="../src/assets/ig/mixta.jpg" style="width:100%;border-radius:8px"><img src="../src/assets/ig/huachana.jpg" style="width:100%;border-radius:8px">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="num">02</div>
+</section>
+
+<!-- 3. La propuesta -->
+<section class="slide dark">
+  <p class="tag">La propuesta</p>
+  <h2 style="max-width:900px">Una vitrina digital que <em>muestra, antoja y vende</em></h2>
+  <p class="lead">Mantenemos la esencia casera y familiar de Doña Eli, con un diseño moderno pensado para que el cliente pida en minutos.</p>
+  <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:34px">
+    <div class="card"><div class="icon">🥟</div><h3>Mostrar</h3><p>Carta ordenada por categorías: empanadas, dulces y bebidas, con foto y descripción de cada una.</p></div>
+    <div class="card"><div class="icon">😋</div><h3>Antojar</h3><p>Fotos grandes, colores cálidos del logo y textos cercanos que dan ganas de pedir al toque.</p></div>
+    <div class="card"><div class="icon">💬</div><h3>Vender</h3><p>"Arma tu pedido": el cliente elige y envía todo por WhatsApp en un solo mensaje, ya escrito.</p></div>
+  </div>
+  <div class="num">03</div>
+</section>
+
+<!-- 4. Estructura -->
+<section class="slide gold">
+  <div class="grid2" style="grid-template-columns:1fr 330px;gap:60px">
+    <div>
+      <p class="tag">Recorrido de la web</p>
+      <h2>Cada sección lleva <em>al pedido</em></h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;margin-top:26px">
+        <div><h3>1 · Portada</h3><p>Mensaje claro y botones para ver la carta o pedir.</p></div>
+        <div><h3>2 · Carta</h3><p>Todas las variedades con botón "Agregar".</p></div>
+        <div><h3>3 · Combos</h3><p>"Arma el mejor plan" y espacio para promociones.</p></div>
+        <div><h3>4 · Cómo pedir</h3><p>3 pasos simples, entregas, pagos y horario.</p></div>
+        <div><h3>5 · Nosotros</h3><p>La historia y los valores: hecho a mano, al horno.</p></div>
+        <div><h3>6 · Momentos y contacto</h3><p>Galería, Instagram, WhatsApp, ubicación.</p></div>
+      </div>
+    </div>
+    <div class="browser" style="height:600px;align-self:center">
+      <div class="browser__bar"><i></i><i></i><i></i></div>
+      <img src="capturas/d-full-small.jpg" alt="" style="width:100%">
+    </div>
+  </div>
+  <div class="num">04</div>
+</section>
+
+<!-- 5. Portada web -->
+<section class="slide">
+  <p class="tag">Primera impresión</p>
+  <h2 style="font-size:46px">Qué vende y cómo pedir, <em>en 3 segundos</em></h2>
+  <div class="browser" style="position:absolute;left:72px;top:180px;width:800px">
+    <div class="browser__bar"><i></i><i></i><i></i><span>Doña Eli Empanadas</span></div>
+    <img src="capturas/d-portada.jpg" alt="" style="width:800px;height:440px;object-fit:cover;object-position:top">
+  </div>
+  <div class="callout" style="right:60px;top:230px"><span class="dot">1</span><b>Su propio lema</b>"Las mejores de Lima Norte", tal como lo dicen en Instagram.</div>
+  <div class="callout" style="right:60px;top:350px"><span class="dot">2</span><b>Botones visibles</b>Ver la carta y pedir por WhatsApp, siempre a la mano.</div>
+  <div class="callout" style="right:60px;top:470px"><span class="dot">3</span><b>Identidad del logo</b>Los rayos dorados y la letra del logo en toda la web.</div>
+  <div class="num">05</div>
+</section>
+
+<!-- 6. Carta -->
+<section class="slide dark">
+  <div class="grid2" style="grid-template-columns:.8fr 1.2fr">
+    <div>
+      <p class="tag">Carta digital</p>
+      <h2>Todas sus variedades, <em>bien presentadas</em></h2>
+      <ul class="bullets">
+        <li><span>Empanadas de <b>pollo, carne, salchicha huachana, mixta y queso</b> huarochirano.</span></li>
+        <li><span><b>Alfajores, chicha morada y jugos</b> para completar el pedido.</span></li>
+        <li><span>Filtros por categoría y botón <b>"Agregar"</b> en cada producto.</span></li>
+        <li><span>Precios y productos se actualizan en minutos.</span></li>
+      </ul>
+    </div>
+    <div class="browser">
+      <div class="browser__bar"><i></i><i></i><i></i><span>Doña Eli Empanadas</span></div>
+      <img src="capturas/d-carta.jpg" alt="">
+    </div>
+  </div>
+  <div class="num">06</div>
+</section>
+
+<!-- 7. Combos -->
+<section class="slide">
+  <div class="grid2" style="grid-template-columns:1.2fr .8fr">
+    <div class="browser">
+      <div class="browser__bar"><i></i><i></i><i></i><span>Doña Eli Empanadas</span></div>
+      <img src="capturas/d-plan.jpg" alt="">
+    </div>
+    <div>
+      <p class="tag">Combos y promos</p>
+      <h2>Arma <em>el mejor plan</em></h2>
+      <p class="lead" style="font-size:20px">Inspirado en su propio contenido: "empanadas, bebidas, postre y familia".</p>
+      <ul class="bullets">
+        <li><span>El cliente elige su empanada, su bebida y si va con alfajor.</span></li>
+        <li><span>Indica <b>para cuántos</b> y lo suma al pedido con un clic.</span></li>
+        <li><span>Espacio listo para <b>promociones, campañas y sabores nuevos</b>.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="num">07</div>
+</section>
+
+<!-- 8. Pedido por WhatsApp -->
+<section class="slide gold">
+  <p class="tag">La estrella: Arma tu pedido</p>
+  <h2 style="max-width:520px;font-size:46px">El pedido llega <em>ordenado</em> a su WhatsApp</h2>
+  <p class="lead" style="max-width:500px;font-size:20px">Sin apps intermedias ni comisiones: el cliente arma su pedido en la web y lo envía directo a Doña Eli.</p>
+  <div style="display:flex;gap:16px;position:absolute;left:72px;top:400px">
+    <span class="pill">1 · Elige</span><span class="pill">2 · Revisa</span><span class="pill ok">3 · Envía por WhatsApp</span>
+  </div>
+  <div class="phone" style="position:absolute;right:410px;top:70px;width:240px"><img src="capturas/m-carta.jpg" alt=""></div>
+  <div class="phone" style="position:absolute;right:110px;top:110px;width:270px;z-index:2"><img src="capturas/m-pedido.jpg" alt=""></div>
+  <div style="position:absolute;left:72px;top:470px;width:470px;background:#DCF8C6;border-radius:18px 18px 18px 4px;padding:16px 20px;font-size:15.5px;line-height:1.45;box-shadow:0 14px 30px -14px rgba(0,0,0,.4)">
+    ¡Hola Doña Eli! 👋 Quiero hacer este pedido:<br>
+    • 2 × Empanada de Salchicha Huachana<br>
+    • 1 × Empanada de Queso · 2 × Empanada de Pollo<br>
+    • 2 × Chicha morada · 2 × Alfajores<br>
+    Nombre: Rosa · Entrega: Recojo en el local
+    <span style="display:block;text-align:right;font-size:12px;color:#6b8a5e">mensaje generado por la web ✓✓</span>
+  </div>
+  <div class="num">08</div>
+</section>
+
+<!-- 9. Móvil -->
+<section class="slide dark">
+  <svg class="rays" id="rays2" viewBox="0 0 600 300" style="right:-80px;bottom:-60px;width:700px;opacity:.3;transform:rotate(180deg)"><g></g></svg>
+  <div style="width:420px">
+    <p class="tag">Pensada para el celular</p>
+    <h2>Donde están <em>sus clientes</em></h2>
+    <p class="lead" style="font-size:20px">Casi todos llegan desde Instagram en el celular. Por eso la web está diseñada primero para el teléfono.</p>
+    <ul class="bullets">
+      <li><span>Botón de WhatsApp siempre visible.</span></li>
+      <li><span>Barra "Ver mi pedido" que acompaña al cliente.</span></li>
+      <li><span>Carga rápida y fácil de usar con una mano.</span></li>
+    </ul>
+  </div>
+  <div class="phone" style="position:absolute;left:560px;top:110px;width:220px"><img src="capturas/m-hero.jpg" alt=""></div>
+  <div class="phone" style="position:absolute;left:800px;top:70px;width:220px"><img src="capturas/m-plan.jpg" alt=""></div>
+  <div class="phone" style="position:absolute;left:1040px;top:110px;width:220px"><img src="capturas/m-carta.jpg" alt=""></div>
+  <div class="num">09</div>
+</section>
+
+<!-- 10. Identidad -->
+<section class="slide">
+  <div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div>
+      <p class="tag">Identidad visual</p>
+      <h2>Su logo, <em>llevado a toda la web</em></h2>
+      <p class="lead" style="font-size:20px">Los colores salen del mismo logo: el dorado de la empanada, el horneado y el marrón tostado. El morado de la chicha da el toque peruano.</p>
+      <div style="display:flex;gap:14px;margin-top:26px">
+        <div style="text-align:center"><div style="width:84px;height:84px;border-radius:20px;background:var(--dorado)"></div><p style="font-size:14px;margin-top:6px">Dorado</p></div>
+        <div style="text-align:center"><div style="width:84px;height:84px;border-radius:20px;background:var(--naranja)"></div><p style="font-size:14px;margin-top:6px">Horneado</p></div>
+        <div style="text-align:center"><div style="width:84px;height:84px;border-radius:20px;background:var(--tostado)"></div><p style="font-size:14px;margin-top:6px">Tostado</p></div>
+        <div style="text-align:center"><div style="width:84px;height:84px;border-radius:20px;background:var(--crema);border:2px solid var(--crema-2)"></div><p style="font-size:14px;margin-top:6px">Crema</p></div>
+        <div style="text-align:center"><div style="width:84px;height:84px;border-radius:20px;background:var(--chicha)"></div><p style="font-size:14px;margin-top:6px">Chicha</p></div>
+      </div>
+    </div>
+    <div class="cards" style="grid-template-columns:1fr">
+      <div class="card" style="display:flex;align-items:center;gap:24px">
+        <img src="../public/img/logo-512.png" alt="" style="width:120px;height:120px;border-radius:50%;box-shadow:0 0 0 4px var(--dorado)">
+        <div><h3>Logo original</h3><p>Se respeta tal cual, como sello de la casa.</p></div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Fraunces';font-weight:900;font-size:40px;line-height:1">Títulos con carácter</div>
+        <div style="font-family:'Kaushan Script';font-size:30px;color:var(--naranja);margin:6px 0">detalles con letra de mano</div>
+        <div style="font-size:18px;color:var(--suave)">y textos limpios, fáciles de leer en el celular.</div>
+      </div>
+    </div>
+  </div>
+  <div class="num">10</div>
+</section>
+
+<!-- 11. Más secciones -->
+<section class="slide gold">
+  <p class="tag">Confianza y cercanía</p>
+  <h2 style="font-size:44px">Todo lo que el cliente pregunta, <em>ya respondido</em></h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:30px">
+    <div><div class="browser" style="height:250px"><img src="capturas/d-pasos.jpg" alt=""></div><h3 style="margin-top:18px">Cómo pedir</h3><p style="font-size:17px">Tres pasos, entregas, pagos y horario.</p></div>
+    <div><div class="browser" style="height:250px"><img src="capturas/d-nosotros.jpg" alt=""></div><h3 style="margin-top:18px">Nosotros</h3><p style="font-size:17px">Sabor casero, hecho a mano y con amor.</p></div>
+    <div><div class="browser" style="height:250px"><img src="capturas/d-contacto.jpg" alt=""></div><h3 style="margin-top:18px">Contacto</h3><p style="font-size:17px">WhatsApp, Instagram, ubicación y horario.</p></div>
+  </div>
+  <div class="num">11</div>
+</section>
+
+<!-- 12. Beneficios -->
+<section class="slide dark">
+  <p class="tag">Beneficios para el negocio</p>
+  <h2>¿Qué gana <em>Doña Eli</em>?</h2>
+  <div class="cards compact" style="grid-template-columns:repeat(3,1fr);margin-top:22px;gap:16px">
+    <div class="card"><div class="icon">📲</div><h3>Pedidos más fáciles</h3><p>El cliente pide en minutos y el mensaje llega claro: qué, cuánto y cómo lo quiere.</p></div>
+    <div class="card"><div class="icon">⏱️</div><h3>Menos preguntas repetidas</h3><p>Carta, horario, entregas y pagos ya están en la web. Menos tiempo respondiendo lo mismo.</p></div>
+    <div class="card"><div class="icon">⭐</div><h3>Imagen profesional</h3><p>Una web propia da confianza y diferencia a Doña Eli de la competencia de Lima Norte.</p></div>
+    <div class="card"><div class="icon">🔗</div><h3>Un link para todo</h3><p>Ideal para la bio de Instagram, estados de WhatsApp, volantes y códigos QR.</p></div>
+    <div class="card"><div class="icon">💸</div><h3>Sin comisiones</h3><p>Los pedidos llegan directo a su WhatsApp, sin pagar porcentaje a apps de delivery.</p></div>
+    <div class="card"><div class="icon">✏️</div><h3>Fácil de actualizar</h3><p>Precios, productos y promociones se cambian rápido, sin rehacer la web.</p></div>
+  </div>
+  <div class="num">12</div>
+</section>
+
+<!-- 13. Hoja de ruta -->
+<section class="slide">
+  <p class="tag">Hoja de ruta</p>
+  <h2>Empezamos hoy, <em>crecemos juntos</em></h2>
+  <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:30px">
+    <div class="card" style="border:3px solid var(--dorado)">
+      <span class="pill ok">Lista para lanzar</span>
+      <h3 style="margin-top:14px">Etapa 1 · Vitrina + pedidos</h3>
+      <ul class="bullets" style="margin-top:10px;gap:8px">
+        <li style="font-size:16px"><span>Web completa y adaptada a celular</span></li>
+        <li style="font-size:16px"><span>Carta digital y combos</span></li>
+        <li style="font-size:16px"><span>Arma tu pedido por WhatsApp</span></li>
+        <li style="font-size:16px"><span>Botones de pedido en toda la web</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="pill">Siguiente paso</span>
+      <h3 style="margin-top:14px">Etapa 2 · Promos y alcance</h3>
+      <ul class="bullets" style="margin-top:10px;gap:8px">
+        <li style="font-size:16px"><span>Calendario de promociones y campañas</span></li>
+        <li style="font-size:16px"><span>Ficha en Google Maps</span></li>
+        <li style="font-size:16px"><span>Dominio propio y QR para el local</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="pill">A futuro</span>
+      <h3 style="margin-top:14px">Etapa 3 · Tienda en línea</h3>
+      <ul class="bullets" style="margin-top:10px;gap:8px">
+        <li style="font-size:16px"><span>Pago en línea</span></li>
+        <li style="font-size:16px"><span>Panel para editar productos</span></li>
+        <li style="font-size:16px"><span>Seguimiento de pedidos</span></li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top:26px;font-size:17px;color:var(--suave)"><b>Inversión:</b> a coordinar según la etapa elegida.</p>
+  <div class="num">13</div>
+</section>
+
+<!-- 14. Qué necesitamos -->
+<section class="slide gold">
+  <div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div>
+      <p class="tag">Para salir al aire</p>
+      <h2>Solo necesitamos <em>estos datos</em></h2>
+      <p class="lead" style="font-size:20px">La web ya está construida. Con esta información la dejamos lista para recibir pedidos reales.</p>
+    </div>
+    <div class="card" style="padding:30px 34px">
+      <ul class="bullets" style="margin:0;gap:12px">
+        <li><span><b>Número de WhatsApp</b> para pedidos</span></li>
+        <li><span><b>Precios</b> de empanadas, dulces y bebidas</span></li>
+        <li><span><b>Dirección</b> y ubicación en Maps</span></li>
+        <li><span><b>Horario</b> de atención</span></li>
+        <li><span><b>Delivery:</b> zonas y condiciones</span></li>
+        <li><span><b>Medios de pago</b> (Yape, Plin, efectivo…)</span></li>
+        <li><span><b>La historia de Doña Eli</b> y fotos originales</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="num">14</div>
+</section>
+
+<!-- 15. Cierre -->
+<section class="slide dark" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+  <svg class="rays" id="rays3" viewBox="0 0 600 300" style="left:50%;top:10px;width:820px;transform:translateX(-50%);opacity:.5"><g></g></svg>
+  <img src="../public/img/logo-512.png" alt="" style="width:150px;height:150px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px var(--dorado);position:relative;margin-top:60px">
+  <h1 style="font-size:64px;font-weight:900;margin:34px 0 16px">¿La ponemos <em>a vender</em>?</h1>
+  <p class="lead" style="font-size:22px;max-width:720px">Que cada antojo de empanada en Lima Norte termine en un pedido para Doña Eli.</p>
+  <p style="margin-top:20px;font-family:'Kaushan Script';font-size:28px;color:var(--dorado)">¡Perú en cada bocado!</p>
+</section>
+
+<script>
+  document.querySelectorAll('.rays g').forEach(g => {
+    const cx = 300, cy = 300, n = 23; let out = "";
+    for (let i = 0; i < n; i++) {
+      const a = Math.PI + (Math.PI * (i + 0.5)) / n, long = i % 2 === 0;
+      const r1 = long ? 150 : 175, r2 = long ? 290 : 250, cut = r1 + (r2 - r1) * (long ? .62 : .55);
+      const pt = r => [cx + Math.cos(a) * r, cy + Math.sin(a) * r].map(v => v.toFixed(1));
+      const [x1, y1] = pt(r1), [x2, y2] = pt(cut - 6), [x3, y3] = pt(cut + 6), [x4, y4] = pt(r2);
+      out += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/><line x1="${x3}" y1="${y3}" x2="${x4}" y2="${y4}"/>`;
+    }
+    g.innerHTML = out;
+  });
+  document.querySelectorAll('.slide').forEach((s, i) => {
+    if (i === 0 || i === 14) return;
+    const f = document.createElement('div'); f.className = 'foot-brand';
+    f.innerHTML = '<img src="../public/img/logo-512.png" alt=""> Doña Eli Empanadas · Propuesta web';
+    s.appendChild(f);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+---
+import { Image } from "astro:assets";
+import { instagramUrl, money, productos, promociones } from "../data/negocio";
+import planChicha from "../assets/ig/plan-chicha.jpg";
+
+const empanadas = productos.filter((p) => p.categoria === "empanadas");
+const bebidas = productos.filter((p) => p.categoria === "bebidas");
+---
+
+<section class="section section--dark" id="plan">
+  <div class="container plan">
+    <div class="plan__media">
+      <Image src={planChicha} alt="Empanada, chicha morada y alfajores sobre la mesa" widths={[480, 640]} sizes="(max-width: 960px) 90vw, 540px" />
+      <span class="plan__script">¡Perú en cada bocado!</span>
+    </div>
+    <div class="plan__body">
+      <p class="tag tag--light">Combos</p>
+      <h2>Arma <em>el mejor plan</em></h2>
+      <p class="plan__lead">
+        Una buena empanada, tu chicha morada o tu jugo, y el toque dulce de un alfajor para cerrar con broche de oro.
+      </p>
+
+      <form class="builder" data-builder>
+        <label class="builder__row">
+          <span class="builder__step">1</span>
+          <span class="builder__label">Tu empanada</span>
+          <select name="empanada">
+            {empanadas.map((p) => <option value={p.id}>{p.nombre}</option>)}
+          </select>
+        </label>
+        <label class="builder__row">
+          <span class="builder__step">2</span>
+          <span class="builder__label">Tu bebida</span>
+          <select name="bebida">
+            {bebidas.map((p) => <option value={p.id}>{p.nombre}</option>)}
+            <option value="">Sin bebida</option>
+          </select>
+        </label>
+        <label class="builder__row builder__row--check">
+          <span class="builder__step">3</span>
+          <span class="builder__label">Con alfajor</span>
+          <input type="checkbox" name="alfajor" checked />
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+        <label class="builder__row">
+          <span class="builder__step">×</span>
+          <span class="builder__label">¿Para cuántos?</span>
+          <span class="qty qty--light">
+            <button type="button" data-builder-minus aria-label="Uno menos">−</button>
+            <output data-builder-qty>1</output>
+            <button type="button" data-builder-plus aria-label="Uno más">+</button>
+          </span>
+        </label>
+        <button class="btn btn--primary btn--block" type="submit">Agregar el plan a mi pedido</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container promos">
+    {
+      promociones.length === 0 ? (
+        <div class="promo promo--empty">
+          <div>
+            <h3>Promos y novedades</h3>
+            <p>Combos, campañas y sabores nuevos los anunciamos primero en Instagram.</p>
+          </div>
+          <a class="btn btn--outline btn--sm" href={instagramUrl} target="_blank" rel="noopener">
+            Ver novedades
+          </a>
+        </div>
+      ) : (
+        promociones.map((pr, i) => (
+          <article class="promo">
+            <p class="tag">Promo</p>
+            <h3>{pr.titulo}</h3>
+            {pr.detalle && <p>{pr.detalle}</p>}
+            {pr.precio != null && <span class="promo__price">{money(pr.precio)}</span>}
+            {pr.vigencia && <span class="promo__vig">{pr.vigencia}</span>}
+            {pr.productos && (
+              <button class="btn btn--primary btn--sm" type="button" data-promo={i}>
+                Agregar al pedido
+              </button>
+            )}
+          </article>
+        ))
+      )
+    }
+  </div>
+</section>

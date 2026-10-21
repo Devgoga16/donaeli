@@ -1,0 +1,38 @@
+---
+import ProductCard from "./ProductCard.astro";
+import { categorias, productos } from "../data/negocio";
+
+const tabs = [{ id: "todas", nombre: "Todo" }, ...categorias].map((t) => ({
+  ...t,
+  n: t.id === "todas" ? productos.length : productos.filter((p) => p.categoria === t.id).length,
+}));
+---
+
+<section class="section section--cream" id="carta">
+  <div class="container">
+    <header class="section__head">
+      <p class="tag">Nuestra carta</p>
+      <h2>Elige tus favoritas</h2>
+      <p>Agrega lo que se te antoje y envía tu pedido por WhatsApp en un solo mensaje.</p>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="Categorías">
+      {
+        tabs.map((t, i) => (
+          <button class="tab" role="tab" type="button" data-tab={t.id} aria-selected={i === 0 ? "true" : "false"}>
+            {t.nombre}
+            <span class="tab__n">{t.n}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="grid-products">
+      {productos.map((p) => <ProductCard producto={p} />)}
+    </div>
+
+    <p class="carta__note">
+      ¿Buscas otro sabor? Escríbenos y te contamos qué hay hoy en la vitrina. <span class="muted">Fotos referenciales.</span>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+---
+import Dato from "./Dato.astro";
+import { config } from "../data/negocio";
+
+const pasos = [
+  { t: "Elige tus favoritas", d: "Agrega empanadas, alfajores y bebidas desde la carta o arma el mejor plan." },
+  { t: "Envíalo por WhatsApp", d: "Revisa tu pedido y envíalo. El mensaje ya va listo, no tienes que escribir nada." },
+  { t: "Coordinamos contigo", d: "Te confirmamos tu pedido, la forma de entrega y el pago. ¡Y a disfrutar!" },
+];
+---
+
+<section class="section section--cream" id="como-pedir">
+  <div class="container">
+    <header class="section__head">
+      <p class="tag">Así de fácil</p>
+      <h2>¿Cómo hago mi pedido?</h2>
+    </header>
+    <ol class="steps">
+      {
+        pasos.map((p, i) => (
+          <li class="step">
+            <span class="step__num">{i + 1}</span>
+            <h3>{p.t}</h3>
+            <p>{p.d}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="info-row">
+      <div class="info-card"><h3>Entregas</h3><p><Dato value={config.entregas} /></p></div>
+      <div class="info-card"><h3>Medios de pago</h3><p><Dato value={config.pagos} /></p></div>
+      <div class="info-card"><h3>Horario de atención</h3><p><Dato value={config.horario} /></p></div>
+    </div>
+  </div>
+</section>

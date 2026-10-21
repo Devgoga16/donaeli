@@ -1,0 +1,42 @@
+---
+import Dato from "./Dato.astro";
+import { config, instagramUrl, waNumber, waSaludo } from "../data/negocio";
+
+const waTexto = waNumber ? "+" + waNumber.replace(/^(\d{2})(\d{3})(\d{3})(\d{3})$/, "$1 $2 $3 $4") : "";
+const MapTag = config.mapaUrl ? "a" : "div";
+---
+
+<section class="section section--dark" id="contacto">
+  <div class="container">
+    <header class="section__head section__head--light">
+      <p class="tag tag--light">Contacto</p>
+      <h2>¿Se te antoja una?</h2>
+      <p>Escríbenos y te atendemos al toque.</p>
+    </header>
+    <div class="contact">
+      <a class="contact__card contact__card--wa" href={waSaludo} target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"></use></svg>
+        <h3>WhatsApp</h3>
+        <p><Dato value={waTexto} fallback="Número por confirmar" /></p>
+        <span class="contact__go">Escribir ahora →</span>
+      </a>
+      <a class="contact__card" href={instagramUrl} target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"></use></svg>
+        <h3>Instagram</h3>
+        <p>@{config.instagram}</p>
+        <span class="contact__go">Ver publicaciones →</span>
+      </a>
+      <MapTag class="contact__card" {...config.mapaUrl ? { href: config.mapaUrl, target: "_blank", rel: "noopener" } : {}}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"></use></svg>
+        <h3>Encuéntranos</h3>
+        <p>{config.direccion ? config.direccion : <>{config.zona} · <span class="tbd">Dirección por confirmar</span></>}</p>
+        {config.mapaUrl && <span class="contact__go">Cómo llegar →</span>}
+      </MapTag>
+      <div class="contact__card">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"></use></svg>
+        <h3>Horario</h3>
+        <p><Dato value={config.horario} /></p>
+      </div>
+    </div>
+  </div>
+</section>

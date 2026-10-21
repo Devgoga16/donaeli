@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import { config, instagramUrl } from "../data/negocio";
+import mixta from "../assets/ig/mixta.jpg";
+import planChicha from "../assets/ig/plan-chicha.jpg";
+import horno from "../assets/ig/horno.jpg";
+import vitrina from "../assets/ig/vitrina.jpg";
+import bebidas from "../assets/ig/bebidas.jpg";
+import alfajores from "../assets/ig/alfajores.jpg";
+import huachana from "../assets/ig/huachana.jpg";
+import salsas from "../assets/ig/salsas.jpg";
+
+const fotos = [
+  { src: mixta, alt: "Empanada mixta abierta con queso derretido", cls: "gallery__big", w: 640 },
+  { src: planChicha, alt: "Mesa con empanadas, alfajores y bebidas" },
+  { src: horno, alt: "Cliente disfrutando su bebida junto al horno" },
+  { src: vitrina, alt: "Niño eligiendo empanadas en la vitrina" },
+  { src: bebidas, alt: "Chicha morada y jugo con empanada" },
+  { src: alfajores, alt: "Alfajores servidos en plato", cls: "gallery__wide", w: 640 },
+  { src: huachana, alt: "Empanada de salchicha huachana recién abierta" },
+  { src: salsas, alt: "Mesa con cremas y empanada lista para servir" },
+];
+---
+
+<section class="section section--cream" id="momentos">
+  <div class="container">
+    <header class="section__head">
+      <p class="tag">Momentos Doña Eli</p>
+      <h2>Imposible resistirse</h2>
+    </header>
+    <div class="gallery">
+      {fotos.map((f) => <Image src={f.src} alt={f.alt} class={f.cls} width={f.w ?? 400} />)}
+    </div>
+    <div class="center">
+      <a class="btn btn--outline" href={instagramUrl} target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ig"></use></svg> Síguenos en @{config.instagram}
+      </a>
+    </div>
+  </div>
+</section>

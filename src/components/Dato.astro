@@ -1,0 +1,10 @@
+---
+// Muestra un dato del negocio o, si aún no está confirmado, una etiqueta "Por confirmar".
+interface Props {
+  value?: string | null;
+  fallback?: string;
+}
+const { value, fallback = "Por confirmar" } = Astro.props;
+---
+
+{value ? value : <span class="tbd">{fallback}</span>}

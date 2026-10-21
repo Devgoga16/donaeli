@@ -1,0 +1,86 @@
+---
+import { getImage } from "astro:assets";
+import { nombrePedido, productos, promociones, waNumber, waSaludo } from "../data/negocio";
+
+// Datos mínimos que necesita el navegador para armar el pedido.
+const datos = {
+  waNumber,
+  productos: await Promise.all(
+    productos.map(async (p) => ({
+      id: p.id,
+      categoria: p.categoria,
+      nombre: nombrePedido(p),
+      precio: p.precio,
+      thumb: (await getImage({ src: p.foto, width: 120, height: 120, fit: "cover" })).src,
+    })),
+  ),
+  promociones: promociones.map((pr) => ({ titulo: pr.titulo, productos: pr.productos ?? {} })),
+};
+---
+
+<script type="application/json" id="pedido-datos" set:html={JSON.stringify(datos)} />
+
+<!-- Barra flotante de pedido -->
+<div class="orderbar" data-orderbar>
+  <button type="button" class="orderbar__btn" data-open-cart>
+    <span class="orderbar__count" data-cart-count>0</span>
+    <span>Ver mi pedido</span>
+    <span class="orderbar__total" data-cart-total></span>
+  </button>
+</div>
+<a class="fab-wa" href={waSaludo} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"></use></svg>
+</a>
+
+<!-- Panel Arma tu pedido -->
+<div class="drawer" data-drawer aria-hidden="true">
+  <div class="drawer__backdrop" data-close-cart></div>
+  <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <header class="drawer__head">
+      <h2 id="drawer-title">Mi pedido</h2>
+      <button type="button" class="drawer__close" data-close-cart aria-label="Cerrar">×</button>
+    </header>
+
+    <div class="drawer__body">
+      <div class="drawer__empty" data-cart-empty>
+        <img src="/img/logo-512.png" alt="" width="96" height="96" />
+        <p>Tu pedido está vacío.<br />¡Agrega tus empanadas favoritas!</p>
+        <a href="#carta" class="btn btn--primary btn--sm" data-close-cart>Ver la carta</a>
+      </div>
+      <ul class="cart-list" data-cart-list></ul>
+
+      <form class="order-form" data-order-form hidden>
+        <label>Tu nombre
+          <input type="text" name="nombre" autocomplete="name" placeholder="¿A nombre de quién?" />
+        </label>
+        <fieldset>
+          <legend>¿Cómo lo quieres?</legend>
+          <label class="chip"><input type="radio" name="entrega" value="Recojo en el local" checked /><span>Recojo en el local</span></label>
+          <label class="chip"><input type="radio" name="entrega" value="Delivery" /><span>Delivery</span></label>
+        </fieldset>
+        <label data-address hidden>Dirección o referencia
+          <input type="text" name="direccion" autocomplete="street-address" placeholder="Distrito, calle y referencia" />
+        </label>
+        <label>Comentario <span class="muted">(opcional)</span>
+          <textarea name="nota" rows="2" placeholder="Ej.: para las 7 p. m., sin ají…"></textarea>
+        </label>
+        <p class="order-form__hint">Te confirmamos disponibilidad, entrega y pago por WhatsApp.</p>
+      </form>
+    </div>
+
+    <footer class="drawer__foot" data-cart-foot hidden>
+      <div class="drawer__total"><span>Total</span><strong data-cart-total>Por confirmar</strong></div>
+      <button type="button" class="btn btn--wa btn--block" data-send-order>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"></use></svg> Enviar pedido por WhatsApp
+      </button>
+      <button type="button" class="link-btn" data-clear-cart>Vaciar pedido</button>
+    </footer>
+  </aside>
+</div>
+
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+
+<script>
+  import { iniciarPedido } from "../scripts/pedido";
+  iniciarPedido();
+</script>

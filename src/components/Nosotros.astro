@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets";
+import bandeja from "../assets/ig/bandeja.jpg";
+import limon from "../assets/ig/limon.jpg";
+---
+
+<section class="section section--gold" id="nosotros">
+  <div class="container about">
+    <div class="about__media">
+      <Image class="about__img about__img--a" src={bandeja} alt="Empanadas recién horneadas servidas en platos" width={480} />
+      <Image class="about__img about__img--b" src={limon} alt="Manos exprimiendo limón sobre una empanada" width={320} />
+    </div>
+    <div class="about__body">
+      <p class="tag">Nosotros</p>
+      <h2>Sabor casero, <em>hecho con amor</em></h2>
+      {/* TODO: reemplazar con la historia real de Doña Eli cuando el cliente la comparta */}
+      <p>
+        Somos <strong>Doña Eli</strong>, una empanadería peruana de Lima Norte para los amantes del buen sabor. Cada
+        empanada se hace a mano, con masa artesanal y un horneado que deja ese color doradito y ese olor que se siente
+        desde lejos.
+      </p>
+      <p>
+        Nos encanta llenar tu mesa de sabor casero y ser parte de esos momentos que valen la pena: empanadas, bebidas,
+        postre y familia.
+      </p>
+      <ul class="values">
+        <li>Masa artesanal</li>
+        <li>Hechas a mano</li>
+        <li>Al horno</li>
+        <li>Sabor nacional</li>
+      </ul>
+    </div>
+  </div>
+</section>

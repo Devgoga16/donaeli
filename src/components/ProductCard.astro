@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import { money, type Producto } from "../data/negocio";
+
+interface Props {
+  producto: Producto;
+}
+const { producto: p } = Astro.props;
+---
+
+<article class="product" data-categoria={p.categoria}>
+  <div class="product__img">
+    <Image src={p.foto} alt={p.nombre} widths={[240, 480]} sizes="(max-width: 560px) 112px, 300px" />
+  </div>
+  {p.etiqueta && <span class="product__label">{p.etiqueta}</span>}
+  <div class="product__body">
+    <h3 class="product__name">{p.nombre}</h3>
+    <p class="product__desc">{p.descripcion}</p>
+    <div class="product__foot">
+      {
+        p.precio != null ? (
+          <span class="product__price">{money(p.precio)}</span>
+        ) : (
+          <span class="product__price product__price--tbd">Precio por confirmar</span>
+        )
+      }
+      <span data-controls={p.id}>
+        <button class="btn btn--primary" type="button" data-add={p.id}>Agregar</button>
+      </span>
+    </div>
+  </div>
+</article>

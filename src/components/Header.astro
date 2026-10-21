@@ -1,0 +1,33 @@
+---
+import { waSaludo } from "../data/negocio";
+---
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#inicio" class="brand" aria-label="Doña Eli Empanadas, ir al inicio">
+      <img src="/img/logo-512.png" alt="" width="52" height="52" />
+      <span class="brand__text">Doña Eli<small>Empanadas</small></span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#carta">Carta</a>
+      <a href="#plan">Combos</a>
+      <a href="#como-pedir">Cómo pedir</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <div class="header__actions">
+      <button class="cart-btn" type="button" data-open-cart aria-label="Ver mi pedido">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bag"></use></svg>
+        <span class="cart-btn__count" data-cart-count>0</span>
+      </button>
+      <a class="btn btn--wa btn--sm hide-sm" href={waSaludo} target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"></use></svg> Pedir
+      </a>
+      <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav" data-menu>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
